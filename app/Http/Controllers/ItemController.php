@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use PhpOption\None;
 
@@ -13,7 +14,10 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::get();
+        $data["items"]=$items;
+        
+        return view('item.index',$items);
     }
 
     /**
@@ -21,7 +25,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('item.create');
     }
 
     /**
@@ -29,7 +33,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request ->all();
+        // dd($request);
+        Item::create($data);
+        return redirect(route("item.index"));
     }
 
     /**
@@ -53,9 +60,15 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        
+        //商品IDから商品データを取得
+        // SELECT * FROM items WHERE id = xx;
+        $item = Item::find($id);
+        $data['item'] = $item;
+        //編集画面を表示
+        return view('item.edit', $data);
     }
 
     /**
@@ -63,14 +76,16 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Item::find($id)->fill("data")->save();
+        return redirect(route("item.edit",$id));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        Item::destroy($id);
+        return redirect(route("item.index"));
     }
 }

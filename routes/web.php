@@ -20,10 +20,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/about',[HomeController::class,"about"]);
-Route::get('/search',[HomeController::class,"search"]);
-Route::get('/item/{id}',[ItemController::class,"show"]);
+// Route::get('/about',[HomeController::class,"about"]);
+// Route::get('/search',[HomeController::class,"search"]);
+// Route::get('/item/{id}',[ItemController::class,"show"]);
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
+Route::get('/item/', [ItemController::class, 'index'])->name('item.index');
+// Route::get('/item/{id}', [ItemController::class, 'show'])->name('item.show');
+Route::get('/dp/{id}', [ItemController::class, 'show']);
+Route::get('/', function () {
+    // resources/views/welcome.blade.php ビューが表示
+    return view('welcome');
+});
+Route::post('/item/store', [ItemController::class, 'store'])->name('item.store');
+Route::get('/item/create', [ItemController::class, 'create'])->name('item.create');
+Route::get("/item/edit/{id}",[ItemController::class,"edit"])->name('item.edit');
+Route::get("/item/update/{id}",[ItemController::class,"update"])->name('item.update');
+Route::get("/item/destroy/{id}",[ItemController::class,"destroy"])->name('item.destroy');
 // Route::get('/about', function () {
 //     return view("about");
 // });
