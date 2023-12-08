@@ -6,23 +6,19 @@
                     <h2>商品一覧</h2>
                     <a href="{{ route('item.create') }}">新規追加</a>
                     <table class="tabel">
-                        echo(items)
-                        <!-- 繰り返し表示 -->
+                        <tr>
+                            <th></th>
+                            <th>商品名</th>
+                            <th>価格</th>
+                        </tr>
                         @foreach($items as $item)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td class="px-6 py-4">
-                                <a href="{{ route('item.edit', $item->id) }}">Edit</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{{ route('item.show', $item->id) }}">{{ $item->name }}</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $item->price }}円
-                            </td>
+                        <tr>
+                            <td><a href="{{ route('item.edit', $item->id) }}">編集</a></td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->price }}</td>
                         </tr>
                         @endforeach
                     </table>
-
                 </div>
             </div>
         </div>
